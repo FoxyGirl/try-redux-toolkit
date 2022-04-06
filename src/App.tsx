@@ -1,23 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
+
+import { userSlice } from './store/reducers/UserSlice';
+import { countSlice } from './store/reducers/CountSlice';
+
+import { useAppSelector, useAppDispatch } from './hooks/redux';
 import './App.css';
 
 function App() {
+  const {increment, decrement} = countSlice.actions;
+  const {count} = useAppSelector(state => state.countReducer);
+  const dispatch = useAppDispatch();
+
+  const handleIncrement = () => {
+    dispatch(increment(5))
+  }
+
+  const handleDecrement = () => {
+    dispatch(decrement(5))
+  }
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          It works
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h2>Count: {count}</h2>
+        <p className="Buttons-wrapper">
+        <button onClick={handleIncrement}>+</button>
+        <button onClick={handleDecrement}>&ndash;</button>
+        </p>
+
       </header>
     </div>
   );
