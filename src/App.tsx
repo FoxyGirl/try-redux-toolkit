@@ -6,7 +6,8 @@ import { useAppSelector, useAppDispatch } from './hooks/redux';
 import './App.css';
 import { fetchUsers } from './store/reducers/ActionCreators';
 
-import Posts from './components/Posts'
+import Posts from './components/Posts';
+import Posts2 from './components/Posts2';
 
 function App() {
   const {increment, decrement} = countSlice.actions;
@@ -36,10 +37,14 @@ function App() {
         </p>
         <h2>Count: {count}</h2>
         <p className="Buttons-wrapper">
-        <button onClick={handleIncrement}>+</button>
-        <button onClick={handleDecrement}>&ndash;</button>
+          <button onClick={handleIncrement}>+</button>
+          <button onClick={handleDecrement}>&ndash;</button>
         </p>
-        <Posts />
+        <div style={{display: 'flex'}}>
+          {/* One request from the same query (using cash) */}
+          <Posts />
+          <Posts2 />
+        </div>
         {isLoading && <h2>Loading...</h2>}
         <p className="Users-wrapper">
           {users.length > 0 && JSON.stringify(users, null, 2)}

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { postAPI } from "../services/PostService";
 
 import PostItem from './PostItem';
@@ -7,9 +8,18 @@ type queryError = {
     data: {}
 }
 
-const Posts = () => {
-    const {data: posts, isLoading, error} = postAPI.useFetchAllPostsQuery(10);
+const Posts2 = () => {
+    const [limit, setLimit] = useState(10);
+    const {data: posts, isLoading, error} = postAPI.useFetchAllPostsQuery(limit);
     const typedError = error as queryError;
+
+
+    useEffect(() => {
+        // It will update query due to different params
+        setTimeout(() => {
+            setLimit(3);
+        }, 2000)
+    }, []);
 
     return (
         <div>
@@ -20,4 +30,4 @@ const Posts = () => {
     )
 }
 
-export default Posts;
+export default Posts2;
