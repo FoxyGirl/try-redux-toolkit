@@ -38,7 +38,7 @@ function App() {
         <button onClick={handleDecrement}>&ndash;</button>
         </p>
         {isLoading && <h2>Loading...</h2>}
-        <p>
+        <p className="Users-wrapper">
           {users.length > 0 && JSON.stringify(users, null, 2)}
         </p>
         {error && <h2>==== {error}</h2>}
