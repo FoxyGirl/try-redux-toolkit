@@ -54,3 +54,19 @@
   text-align: justify;
   font-size: 0.8rem;
 }
+
+.Post {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin: 10px 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  background-color: lightcyan;
+  border: 1px solid blue;
+}
+
+.Post-info {
+  margin-right: 20px;
+}

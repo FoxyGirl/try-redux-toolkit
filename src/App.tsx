@@ -6,6 +6,8 @@ import { useAppSelector, useAppDispatch } from './hooks/redux';
 import './App.css';
 import { fetchUsers } from './store/reducers/ActionCreators';
 
+import Posts from './components/Posts'
+
 function App() {
   const {increment, decrement} = countSlice.actions;
   const {count} = useAppSelector(state => state.countReducer);
@@ -37,6 +39,7 @@ function App() {
         <button onClick={handleIncrement}>+</button>
         <button onClick={handleDecrement}>&ndash;</button>
         </p>
+        <Posts />
         {isLoading && <h2>Loading...</h2>}
         <p className="Users-wrapper">
           {users.length > 0 && JSON.stringify(users, null, 2)}
