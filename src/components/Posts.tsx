@@ -8,7 +8,9 @@ type queryError = {
 }
 
 const Posts = () => {
-    const {data: posts, isLoading, error} = postAPI.useFetchAllPostsQuery(10);
+    const {data: posts, isLoading, error} = postAPI.useFetchAllPostsQuery(10, {
+        pollingInterval: 1000,
+    });
     const typedError = error as queryError;
 
     return (
