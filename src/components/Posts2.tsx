@@ -10,7 +10,7 @@ type queryError = {
 
 const Posts2 = () => {
     const [limit, setLimit] = useState(10);
-    const {data: posts, isLoading, error} = postAPI.useFetchAllPostsQuery(limit);
+    const {data: posts, isLoading, error, refetch} = postAPI.useFetchAllPostsQuery(limit);
     const typedError = error as queryError;
 
 
@@ -23,6 +23,8 @@ const Posts2 = () => {
 
     return (
         <div>
+            {!isLoading && <p><button onClick={refetch}>REFETCH</button></p>}
+
             {isLoading && <h2>Loading...</h2>}
             {posts && posts.map(post => <PostItem key={post.id} post={post}/>)}
             {error && <h3 style={{color: 'red'}}>Error with status: {typedError.status}</h3>}
