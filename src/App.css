@@ -1,4 +1,6 @@
 .App {
+  width: 80vw;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -14,8 +16,6 @@
 }
 
 .App-header {
-  /* background-color: #282c34; */
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,6 +26,18 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.App-main {
+  display: flex;
+}
+
+.App-main section {
+  flex-grow: 1;
+}
+
+.App-main div {
+  flex-grow: 1;
 }
 
 @keyframes App-logo-spin {
@@ -42,7 +54,7 @@
   text-align: center;
 }
 
-.Buttons-wrapper button{
+.Buttons-wrapper button {
   margin: 0 10px;
   padding: 0 15px;
   font-weight: bold;
@@ -67,8 +79,29 @@
   border: 1px solid blue;
 }
 
+.Post-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
+.Post-buttons button {
+  margin-bottom: 10px;
+}
+
 .Post-info {
   flex-grow: 1;
   margin-right: 20px;
   text-align: left;
+}
+
+.Post-body {
+  font-weight: normal;
+}
+
+.Post-author {
+  margin-bottom: 0;
+  font-weight: normal;
+  font-style: italic;
+  text-align: right;
+  font-size: 0.8rem;
 }
