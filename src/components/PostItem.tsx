@@ -5,7 +5,7 @@ import { IPost } from '../models/IPost';
 interface PostItemProps {
   post: IPost;
   remove: (post: IPost) => void;
-  update: (post: IPost) => void;
+  update?: (post: IPost) => void;
 }
 
 const PostItem: FC<PostItemProps> = ({ post, remove, update }) => {
@@ -16,8 +16,7 @@ const PostItem: FC<PostItemProps> = ({ post, remove, update }) => {
 
   const handleUpdate = (event: React.MouseEvent) => {
     event.preventDefault();
-    const title = prompt() || '';
-    update({ ...post, title });
+    update!(post);
   };
 
   return (
@@ -28,7 +27,7 @@ const PostItem: FC<PostItemProps> = ({ post, remove, update }) => {
         <p className="Post-author">{post.author || 'Unknown'}</p>
       </div>
       <p className="Post-buttons">
-        <button onClick={handleUpdate}>Update</button>
+        {update && <button onClick={handleUpdate}>Update</button>}
         <button onClick={handleRemove}>Delete</button>
       </p>
     </div>

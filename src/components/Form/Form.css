@@ -1,0 +1,51 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 10px 20px 20px;
+  font-size: 1rem;
+}
+
+.Form button {
+  margin-left: auto;
+}
+
+.Label {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.Label span {
+  width: 45px;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.Label input {
+  font: inherit;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.Label textarea {
+  flex-grow: 1;
+  width: 100%;
+  font: inherit;
+  resize: vertical;
+}
+
+.Textarea-wrong,
+.Input-wrong {
+  border-color: red;
+}
+
+.Error {
+  position: absolute;
+  left: 70px;
+  bottom: -13px;
+  font-size: 0.6rem;
+  color: red;
+}
