@@ -31,17 +31,18 @@ describe('posts in the app', () => {
     cy.get(posts2Selector).should('have.length', 4);
   });
 
-  it('should not have Update button in the second posts section', () => {
+  it('should not have "Update" button in the second posts section', () => {
     cy.visit('/');
 
     cy.get('[data-testid="posts2"]').should('be.not.empty');
     cy.get(posts2Selector).should('have.length', 4);
-    cy.get(`${posts2Selector} .Post-buttons`)
-      .first()
-      .find('button')
-      .should('have.length', 1)
-      .should('not.have.text', 'Update')
-      .should('have.text', 'Delete');
+    cy.get(`${posts2Selector} .Post-buttons`).each(($el) => {
+      cy.wrap($el)
+        .find('button')
+        .should('have.length', 1)
+        .should('not.have.text', 'Update')
+        .should('have.text', 'Delete');
+    });
   });
 
   context('with a real response', () => {
