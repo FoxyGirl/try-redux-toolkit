@@ -54,8 +54,8 @@ const Posts = () => {
           post={currentPost}
         />
       </div>
-      <div>
-        {isLoading && <h2>Loading...</h2>}
+      <div data-testid="posts">
+        {isLoading && <h2 data-testid="loading">Loading...</h2>}
         {reversedPosts.length > 0 &&
           reversedPosts.map((post) => (
             <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />

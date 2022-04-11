@@ -18,8 +18,8 @@ const Posts2 = () => {
   };
 
   return (
-    <div>
-      {isLoading && <h2>Loading...</h2>}
+    <div data-testid="posts2">
+      {isLoading && <h2 data-testid="loading">Loading...</h2>}
       {posts && posts.map((post) => <PostItem key={post.id} post={post} remove={handleRemove} />)}
       {error && <h3 style={{ color: 'red' }}>Error with status: {typedError.status}</h3>}
     </div>
