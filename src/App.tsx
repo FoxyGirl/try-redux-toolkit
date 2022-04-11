@@ -44,9 +44,13 @@ function App() {
         <Posts />
         <Posts2 />
       </div>
-      {isLoading && <h2>Loading...</h2>}
+      {isLoading && <h2 data-testid="usersLoading">Loading...</h2>}
       <p className="Users-wrapper">{users.length > 0 && JSON.stringify(users, null, 2)}</p>
-      {error && <h2>==== {error}</h2>}
+      {error && (
+        <h2 style={{ color: 'red' }} data-testid="usersError">
+          {error}
+        </h2>
+      )}
     </div>
   );
 }
