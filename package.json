@@ -27,7 +27,9 @@
     "json-server": "json-server --watch db.json --port 5000",
     "dev": "concurrently \"npm run json-server\" \"npm start\"",
     "cypress:open": "cypress open",
+    "cypress:run": "cypress run --spec 'cypress/integration/0-e2e-tests/*' ",
     "test:e2e": "concurrently \"npm run dev\" \"npm run cypress:open\"",
+    "test:e2e:silent": "concurrently \"npm run dev\" \"npm run cypress:run\"",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
