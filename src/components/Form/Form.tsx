@@ -1,6 +1,7 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
 
 import { IPost } from '../../models/IPost';
+import { FormButtonText, HelpText } from '../../types';
 
 import Input from '../Input';
 import Textarea from '../Textarea';
@@ -25,8 +26,9 @@ interface IValidateInfo {
   firstErrorEl: HTMLInputElement | HTMLTextAreaElement | null;
 }
 
-const errorMessage = 'Required field';
+export const errorMessage = 'Required field';
 
+export const defaultAuthor = 'unkown';
 interface IFormProps {
   onFormSubmit: (post: IPost) => void;
   isLoading: boolean;
@@ -89,7 +91,7 @@ const Form: FC<IFormProps> = ({ onFormSubmit, isLoading, isUpdate, post }) => {
     const formData: IForm = {
       title,
       body,
-      author: author ? author : 'unknown',
+      author: author ? author : HelpText.DEFAULT_AUTHOR,
     };
 
     return {
@@ -150,8 +152,8 @@ const Form: FC<IFormProps> = ({ onFormSubmit, isLoading, isUpdate, post }) => {
 
       <button data-testid="submitForm" disabled={isLoading || hasErrors}>
         {isLoading
-          ? `${isUpdate ? 'Updating' : 'Creating'} post...`
-          : `${isUpdate ? 'Update post' : 'Add new post'}`}
+          ? `${isUpdate ? FormButtonText.UPDATING_POST : FormButtonText.CREATING_POST}`
+          : `${isUpdate ? FormButtonText.UPDATE_POST : FormButtonText.ADD_POST}`}
       </button>
     </form>
   );
