@@ -148,7 +148,7 @@ const Form: FC<IFormProps> = ({ onFormSubmit, isLoading, isUpdate, post }) => {
       />
       <Input label="Author" name="author" defaultValue={post?.author} />
 
-      <button disabled={isLoading || hasErrors}>
+      <button data-testid="submitForm" disabled={isLoading || hasErrors}>
         {isLoading
           ? `${isUpdate ? 'Updating' : 'Creating'} post...`
           : `${isUpdate ? 'Update post' : 'Add new post'}`}

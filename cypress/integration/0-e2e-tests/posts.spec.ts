@@ -4,6 +4,7 @@ import { interceptIndefinitely } from '../../support/utlis';
 const postUrl = 'http://localhost:5000/posts?_limit=30';
 const loaderSelector = '[data-testid="posts"] [data-testid="loading"]';
 const postsSelector = '[data-testid="posts"] .Post';
+const posts2Selector = '[data-testid="posts2"] .Post';
 
 const mockPosts = [
   {
@@ -26,7 +27,20 @@ describe('posts in the app', () => {
     cy.get(postsSelector).should('have.length', 4);
 
     cy.get('[data-testid="posts2"]').should('be.not.empty');
-    cy.get('[data-testid="posts2"] .Post').should('have.length', 4);
+    cy.get(posts2Selector).should('have.length', 4);
+  });
+
+  it('should not have Update button in the second posts section', () => {
+    cy.visit('/');
+
+    cy.get('[data-testid="posts2"]').should('be.not.empty');
+    cy.get(posts2Selector).should('have.length', 4);
+    cy.get(`${posts2Selector} .Post-buttons`)
+      .first()
+      .find('button')
+      .should('have.length', 1)
+      .should('not.have.text', 'Update')
+      .should('have.text', 'Delete');
   });
 
   context('with a real response', () => {
@@ -83,5 +97,73 @@ describe('posts in the app', () => {
           cy.get(loaderSelector).should('not.exist');
         });
     });
+  });
+});
+
+describe('form for creating and updating posts in the app', () => {
+  const inputTitleSlector = 'input[name="title"]';
+  const inputBodySlector = 'textarea[name="body"]';
+  const inputAuthorSlector = 'input[name="author"]';
+  const submitButtonSlector = '[data-testid="submitForm"]';
+
+  const testTitle = 'Test title';
+  const testBody = 'Test body';
+
+  it('should have form with set of empty inputs and button', () => {
+    cy.visit('/');
+
+    cy.get('.Form').should('be.not.empty');
+    cy.get('.Form .Label').should('have.length', 3);
+    cy.get(inputTitleSlector).should('be.exist').should('have.value', '');
+    cy.get(inputBodySlector).should('be.exist').should('have.value', '');
+    cy.get(inputAuthorSlector).should('be.exist').should('have.value', '');
+    cy.get(submitButtonSlector).should('be.exist').should('have.text', 'Add new post');
+  });
+
+  it('should create a new post', () => {
+    cy.visit('/');
+
+    cy.get(inputTitleSlector).type(testTitle);
+    cy.get(inputTitleSlector).should('have.value', testTitle);
+    cy.get(inputBodySlector).type(testBody);
+    cy.get(inputBodySlector).should('have.value', testBody);
+    cy.get(inputAuthorSlector).should('be.exist').should('have.value', '');
+    cy.get(submitButtonSlector).click();
+
+    cy.get(postsSelector).should('have.length', 5);
+    cy.get(posts2Selector).should('have.length', 5);
+
+    cy.get(postsSelector).first().find('.Post-info span').should('contain.text', testTitle);
+    cy.get(postsSelector).first().find('.Post-body').should('have.text', testBody);
+    cy.get(postsSelector).first().find('.Post-author').should('have.text', 'unknown');
+
+    cy.get(posts2Selector).last().find('.Post-info span').should('contain.text', testTitle);
+    cy.get(posts2Selector).last().find('.Post-body').should('have.text', testBody);
+    cy.get(posts2Selector).last().find('.Post-author').should('have.text', 'unknown');
+  });
+
+  it('should delete a post', () => {
+    cy.visit('/');
+
+    cy.get(postsSelector).should('have.length', 5);
+    cy.get(posts2Selector).should('have.length', 5);
+
+    cy.get(postsSelector)
+      .first()
+      .find('.Post-buttons button')
+      .last()
+      .should('have.text', 'Delete')
+      .click();
+
+    cy.get(postsSelector).should('have.length', 4);
+    cy.get(posts2Selector).should('have.length', 4);
+
+    cy.get(postsSelector).first().find('.Post-info span').should('not.contain.text', testTitle);
+    cy.get(postsSelector).first().find('.Post-body').should('not.have.text', testBody);
+    cy.get(postsSelector).first().find('.Post-author').should('not.have.text', 'unknown');
+
+    cy.get(posts2Selector).last().find('.Post-info span').should('not.contain.text', testTitle);
+    cy.get(posts2Selector).last().find('.Post-body').should('not.have.text', testBody);
+    cy.get(posts2Selector).last().find('.Post-author').should('not.have.text', 'unknown');
   });
 });

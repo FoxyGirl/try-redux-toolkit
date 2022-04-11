@@ -22,7 +22,7 @@ const PostItem: FC<PostItemProps> = ({ post, remove, update }) => {
   return (
     <div className="Post">
       <div className="Post-info">
-        {`${post.id}: ${post.title}`}
+        <span>{`${post.id}: ${post.title}`}</span>
         <p className="Post-body">{post.body || 'Post body'}</p>
         <p className="Post-author">{post.author || 'Unknown'}</p>
       </div>
