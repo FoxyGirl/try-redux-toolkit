@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 import { countSlice } from './store/reducers/CountSlice';
 
@@ -18,16 +18,11 @@ function App() {
 
   useEffect(() => {
     dispatch(fetchUsers());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch]);
 
-  const handleIncrement = () => {
-    dispatch(increment(5));
-  };
+  const handleIncrement = useCallback(() => dispatch(increment(5)), [dispatch, increment]);
 
-  const handleDecrement = () => {
-    dispatch(decrement(5));
-  };
+  const handleDecrement = useCallback(() => dispatch(decrement(5)), [dispatch, decrement]);
 
   return (
     <div className="App">
