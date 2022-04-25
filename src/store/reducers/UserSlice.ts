@@ -1,39 +1,51 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
+import { createSlice, PayloadAction, isAnyOf } from '@reduxjs/toolkit';
 
-import { IUser } from "../../models/IUser"
+import { IUser } from '../../models/IUser';
 import { fetchUsers } from './ActionCreators';
 
 interface UserState {
-    users: IUser[];
-    isLoading: boolean;
-    error: string;
+  users: IUser[];
+  isLoading: boolean;
+  error?: string;
 }
 
 const initialState: UserState = {
-    users: [],
-    isLoading: false,
-    error: '',
-}
+  users: [],
+  isLoading: false,
+  error: '',
+};
 
-export const userSlice = createSlice({
-    name: 'user',
-    initialState,
-    reducers: {},
-    extraReducers: {
-        [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
-            state.isLoading = false;
-            state.error = '';
-            state.users = action.payload;
-        },
-        [fetchUsers.pending.type]: (state) => {
-            state.isLoading = true;
-            state.error = '';
-        },
-        [fetchUsers.rejected.type]: (state, action: PayloadAction<string>) => {
-            state.isLoading = false;
-            state.error = action.payload;
-        },
-    }
+const userSlice = createSlice({
+  name: 'user',
+  initialState,
+  reducers: {
+    setError: (state, { payload }: PayloadAction<string>) => {
+      state.error = payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUsers.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = '';
+        state.users = payload;
+      })
+      .addCase(fetchUsers.pending, (state) => {
+        state.isLoading = true;
+        state.error = '';
+      })
+      .addMatcher(
+        isAnyOf(fetchUsers.rejected), (state, { payload }) => {
+          state.isLoading = false;
+          state.error = payload;
+        }
+      );
+  }
 });
 
-export default userSlice.reducer;
+export const {
+  actions: {
+    setError
+  },
+  reducer: userReducer
+} = userSlice
